@@ -63,3 +63,12 @@
 @import url(./blocks/popup/_places/popup_places.css);
 
 @import url(./blocks/popup/__form-places/popup__form-places.css);
+@import url(./blocks/register/register__signin.css);
+@import url(./blocks/register/__text/register__text.css);
+@import url(./blocks/register/__link/register__link.css);
+
+
+@import url(./blocks/header/__nav/header__nav.css);
+@import url(./blocks/header/__nav/_link/header__nav_link.css);
+@import url(./blocks/header/__nav/_link/header__nav_link-out.css);
+@import url(./blocks/popup/__img-message/popup__img-message.css);

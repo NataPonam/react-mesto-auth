@@ -18,3 +18,17 @@
     padding-bottom: 5px;
   }
 }
+.popup__input.auth{
+color:rgba(255, 255, 255, 1);
+background-color: #000000;
+border-bottom: 2px solid rgba(204, 204, 204, 1);
+
+
+}
+.popup__input.auth::placeholder {
+  color:  rgba(204, 204, 204, 1);
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+ 
+}
