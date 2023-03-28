@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
@@ -90,13 +89,14 @@ function App() {
   }, [isOpen]);
 
   useEffect(() => {
-    Promise.all([api.getAllCards(), api.getUser()])
-      .then(([cards, user]) => {
-        setCurrentUser(user);
-        setCards(cards);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    loggedIn &&
+      Promise.all([api.getAllCards(), api.getUser()])
+        .then(([cards, user]) => {
+          setCurrentUser(user);
+          setCards(cards);
+        })
+        .catch((err) => console.log(err));
+  }, [loggedIn]);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -167,11 +167,6 @@ function App() {
     return auth
       .register(email, password)
       .then((res) => {
-        if (!res) {
-          throw (
-            (new Error('неверный логин или пароль'), setIsTooltipSuccess(false))
-          );
-        }
         if (res) {
           return (
             res,
@@ -180,19 +175,29 @@ function App() {
           );
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setIsTooltipSuccess(false);
+        console.log(err);
+      })
       .finally(() => setIsTooltipOpen(true));
   }
   //Войти
   function onLogin({ email, password }) {
-    auth.authorize(email, password).then((res) => {
-      if (!res) {
+    auth
+      .authorize(email, password)
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          navigate('/', { replace: true });
+          setIsTooltipOpen(false);
+        }
+      })
+      .catch((err) => {
         setLoggedIn(false);
-      } else {
-        setLoggedIn(true);
-        navigate('/', { replace: true });
-      }
-    });
+        setIsTooltipOpen(true);
+        setIsTooltipSuccess(false);
+        console.log(err);
+      });
   }
 
   useEffect(() => {

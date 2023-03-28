@@ -17,9 +17,7 @@ export const register = (email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-  })
-    .then(checkResponse)
-    .catch((err) => console.log(err));
+  }).then(checkResponse);
 };
 
 //авторизация
@@ -36,8 +34,7 @@ export const authorize = (email, password) => {
     .then((data) => {
       localStorage.setItem('jwt', data.token);
       return data;
-    })
-    .catch((err) => console.log(err));
+    });
 };
 
 //
